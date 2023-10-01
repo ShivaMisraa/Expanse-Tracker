@@ -1,12 +1,16 @@
 import React, { useState, useRef } from "react";
 import { Form, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
 
+
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
   const confirmPasswordInputRef = useRef();
+
+  const history = useHistory();
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -17,13 +21,20 @@ const Login = () => {
 
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
-    const enteredConfirmPassword = confirmPasswordInputRef.current.value;
 
-    // Check if the passwords match during signup
-    if (enteredPassword !== enteredConfirmPassword) {
-      alert("Passwords do not match.");
-      return;
-    }
+    
+    if (!isLogin) {
+        const enteredConfirmPassword = confirmPasswordInputRef.current.value;
+    
+        
+        if (enteredPassword !== enteredConfirmPassword) {
+          alert("Passwords do not match.");
+          return; 
+        }
+      }
+    
+
+    
 
     let url;
     if (isLogin) {
@@ -60,10 +71,13 @@ const Login = () => {
         console.log("User logged in");
         emailInputRef.current.value = '';
         passwordInputRef.current.value = '';
-        confirmPasswordInputRef.current.value='';
+
+        history.push("/loginPage");
+
       })
       .catch((err) => {
         alert(err.message);
+        console.log(err.message)
       });
   };
 
@@ -109,16 +123,17 @@ const Login = () => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Confirm Password"
-            ref={confirmPasswordInputRef}
-            required
-          />
-        </Form.Group>
-
+        {!isLogin && (
+            <Form.Group className="mb-3">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Confirm Password"
+              ref={confirmPasswordInputRef}
+              required
+            />
+          </Form.Group>
+          )}
         <div className="d-flex justify-content-center">
           <Button onClick={submitHandler} variant="primary" type="submit">
             {isLogin ? "Login" : "Create Account"}
