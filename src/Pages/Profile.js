@@ -1,0 +1,96 @@
+import React, { useState } from 'react';
+import { Form, Button } from 'react-bootstrap';
+import './Profile.css';
+
+const Profile = () => {
+  const [fullName, setFullName] = useState('');
+  const [photoUrl, setPhotoUrl] = useState('');
+
+  const token= localStorage.getItem('token');
+    
+
+  const handleUpdate = () => {
+    const updateUrl = 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDA0MnYovAyBq-q5_FGCq5ZyxG_OYvpF50';
+  
+    const data = {
+      idToken: token,
+      displayName: fullName,
+      photoUrl: photoUrl,
+      returnSecureToken: true,
+    };
+  
+    fetch(updateUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to update user details');
+        }
+        return response.json();
+      })
+      .then(responseData => {
+        console.log('User details updated successfully', responseData);
+      })
+      .catch(error => {
+        console.log('Error updating user details', error);
+      });
+  };
+  
+
+  return (
+    <>
+      <div className="login-page-container">
+        <div className="left-">
+          <h5 className='bold-text'>Winners never quite, Quitters never win.</h5>
+        </div>
+        <div className="right-div">
+          <p className="profile-para bold-text">
+            Your Profile is 64% completed.A complete Profile has higher chances of landing a job.
+            <p className='para'>Complete Now</p>
+          </p>
+        </div>
+      </div>
+      <div className="profile-container">
+        <Form>
+          <div className="contact-details bold-text">
+            <p>Contact Details</p>
+            <Button variant="primary justify-content-end">
+              Cancel
+            </Button>
+          </div>
+          <div className="form-fields ">
+            <div className="form-group bold-text">
+              <label htmlFor="fullName">Full Name:</label>
+              <Form.Control
+                type="text"
+                id="fullName"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+              />
+            </div>
+            <div className="form-group bold-text">
+              <label htmlFor="photoUrl">Profile Photo URL:</label>
+              <Form.Control
+                type="text"
+                id="photoUrl"
+                value={photoUrl}
+                onChange={(e) => setPhotoUrl(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="update-button">
+            <Button variant="primary" onClick={handleUpdate}>
+              Update
+            </Button>
+          </div>
+        </Form>
+      </div>
+    </>
+  );
+};
+
+export default Profile;

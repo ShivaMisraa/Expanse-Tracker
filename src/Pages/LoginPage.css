@@ -1,0 +1,26 @@
+
+.login-page-container {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+  }
+  
+  .left-div {
+    margin-top: 12px;
+    flex: 1;
+  }
+  
+  .right-div {
+    justify-content: center;
+    flex: 1;
+    text-align: center;
+    
+  }
+  .profile-para{
+    margin-top: 12px;
+    background-color: #A9D0F5; 
+    border-radius: 5px;
+  }
+  

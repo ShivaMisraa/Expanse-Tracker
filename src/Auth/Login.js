@@ -68,6 +68,8 @@ const Login = () => {
       })
       .then((data) => {
         console.log(data.idToken);
+        const token= data.idToken
+        localStorage.setItem("token", token)
         console.log("User logged in");
         emailInputRef.current.value = '';
         passwordInputRef.current.value = '';

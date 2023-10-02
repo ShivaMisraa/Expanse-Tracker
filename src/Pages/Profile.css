@@ -1,0 +1,48 @@
+.profile-container {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-left: 30%;
+}
+
+.contact-details {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.form-group {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.update-button {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 20px;
+}
+
+.para {
+  font-style: italic;
+  color: red; 
+}
+
+.bold-text {
+  font-weight: bold;
+}
+
+.login-page-container{
+  margin-top: 15px;
+}
+.right-div{
+  margin-left: 30%;
+}
