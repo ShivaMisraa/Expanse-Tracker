@@ -6,8 +6,12 @@ import "./ForgetPw.css"
 const ForgetPassWord = () => {
   const [email, setEmail] = useState(""); 
   const [message, setMessage] = useState(""); 
+  const [loading, setLoading] = useState(false);
+  
 
   const sendPasswordResetLink = () => {
+
+    setLoading(true);
     
     const url = `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDA0MnYovAyBq-q5_FGCq5ZyxG_OYvpF50`;
     const data = {
@@ -22,17 +26,19 @@ const ForgetPassWord = () => {
       },
       body: JSON.stringify(data),
     })
-      .then((response) => response.json())
-      .then((responseData) => {
-        if (responseData.error) {
-          setMessage(`Error: ${responseData.error.message}`);
-        } else {
+    .then((response) => {
+        if (response.ok) {
           setMessage("Password reset link sent successfully!");
-          console.log("link has been sent to email id ", setEmail)
+          console.log("link has been sent to email id ", email);
+        } else {
+          setMessage(`Error: ${response.statusText}`);
         }
       })
       .catch((error) => {
         setMessage(`Error: ${error.message}`);
+      })
+      .finally(() => {
+        setLoading(false); 
       });
   };
 
@@ -53,6 +59,7 @@ const ForgetPassWord = () => {
         <Button variant="primary" onClick={sendPasswordResetLink}>
           Send Link
         </Button>
+        {loading && <div>Sending Verification mail...</div>}
         <div className="mt-2">{message}</div>
         <Link to="/login" className="complete-button">
               Already a user? Login.
