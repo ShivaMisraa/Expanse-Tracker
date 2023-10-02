@@ -83,11 +83,6 @@ const Profile = () => {
       fetchUserData();
   };
   
-  const handleGetData = () => {
-    
-    setToken(localStorage.getItem('token'));
-    console.log('get data is called')
-  };
 
   return (
     <>
@@ -106,8 +101,8 @@ const Profile = () => {
         <Form>
           <div className="contact-details bold-text">
             <p>Contact Details</p>
-            <Button variant="primary justify-content-end"  onClick={handleGetData}>
-              Get Data
+            <Button variant="primary justify-content-end"  >
+              Cancel
             </Button>
           </div>
           <div className="form-fields ">
