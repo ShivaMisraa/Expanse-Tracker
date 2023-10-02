@@ -1,0 +1,32 @@
+/* ForgetPW.css */
+
+.forget-password-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; 
+}
+
+.forget-password-form {
+    width: 300px; 
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.forget-password-form p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: bold; 
+}
+
+.forget-password-form .form-group {
+    margin-bottom: 20px;
+}
+
+.forget-password-form .btn {
+    width: 100%;
+}

@@ -1,10 +1,9 @@
 import React, { useState, useRef } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
-
 
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
@@ -22,19 +21,14 @@ const Login = () => {
     const enteredEmail = emailInputRef.current.value;
     const enteredPassword = passwordInputRef.current.value;
 
-    
     if (!isLogin) {
-        const enteredConfirmPassword = confirmPasswordInputRef.current.value;
-    
-        
-        if (enteredPassword !== enteredConfirmPassword) {
-          alert("Passwords do not match.");
-          return; 
-        }
-      }
-    
+      const enteredConfirmPassword = confirmPasswordInputRef.current.value;
 
-    
+      if (enteredPassword !== enteredConfirmPassword) {
+        alert("Passwords do not match.");
+        return;
+      }
+    }
 
     let url;
     if (isLogin) {
@@ -68,18 +62,17 @@ const Login = () => {
       })
       .then((data) => {
         console.log(data.idToken);
-        const token= data.idToken
-        localStorage.setItem("token", token)
+        const token = data.idToken;
+        localStorage.setItem("token", token);
         console.log("User logged in");
-        emailInputRef.current.value = '';
-        passwordInputRef.current.value = '';
+        emailInputRef.current.value = "";
+        passwordInputRef.current.value = "";
 
         history.push("/loginPage");
-
       })
       .catch((err) => {
         alert(err.message);
-        console.log(err.message)
+        console.log(err.message);
       });
   };
 
@@ -126,7 +119,7 @@ const Login = () => {
         </Form.Group>
 
         {!isLogin && (
-            <Form.Group className="mb-3">
+          <Form.Group className="mb-3">
             <Form.Label>Confirm Password</Form.Label>
             <Form.Control
               type="password"
@@ -135,7 +128,11 @@ const Login = () => {
               required
             />
           </Form.Group>
-          )}
+        )}
+        <div className="d-flex justify-content-center mt-2">
+          <Link to="/forgetPW">Forget Password ?</Link>
+        </div>
+
         <div className="d-flex justify-content-center">
           <Button onClick={submitHandler} variant="primary" type="submit">
             {isLogin ? "Login" : "Create Account"}

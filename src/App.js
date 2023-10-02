@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import React, { useState } from 'react';
 import Profile from './Pages/Profile';
 import LoginPage from './Pages/LoginPage';
+import ForgetPassWord from './Pages/ForgetPW';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,6 +15,7 @@ function App() {
       <Switch>
         <Route path="/profile" component={Profile} />
         <Route path="/loginPage" component={LoginPage} />
+        <Route path="/forgetpw" component={ForgetPassWord} />
         <Route path="/login">
           {isLoggedIn ? <Profile /> : <Login onLogin={() => setIsLoggedIn(true)} />}
         </Route>
