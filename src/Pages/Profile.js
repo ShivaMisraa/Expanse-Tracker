@@ -16,7 +16,7 @@ const Profile = () => {
 
   const fetchUserData = () => {
     if (!token) {
-      return; // Don't make the request if there's no token
+      return;
     }
 
     const lookupUrl = `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyDA0MnYovAyBq-q5_FGCq5ZyxG_OYvpF50`;
@@ -38,10 +38,10 @@ const Profile = () => {
         return response.json();
       })
       .then((responseData) => {
-        // Extract user data from the response and update the state
+       
         const user = responseData.users[0];
-        setFullName(user.displayName || ''); // Set full name if available
-        setPhotoUrl(user.photoUrl || ''); // Set photo URL if available
+        setFullName(user.displayName || ''); 
+        setPhotoUrl(user.photoUrl || '');
       })
       .catch((error) => {
         console.log('Error fetching user data', error);
@@ -84,7 +84,7 @@ const Profile = () => {
   };
   
   const handleGetData = () => {
-    // Set the token to trigger fetching user data
+    
     setToken(localStorage.getItem('token'));
     console.log('get data is called')
   };
@@ -136,6 +136,7 @@ const Profile = () => {
             </Button>
           </div>
         </Form>
+     
       </div>
     </>
   );
