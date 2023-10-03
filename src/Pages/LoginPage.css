@@ -1,10 +1,15 @@
-
+.main-login-div{
+  background-image: url('https://www.boardandlife.com/wp-content/uploads/2019/09/monthly-expense-tracker-desk-space.jpg');
+  background-size: cover; 
+  background-attachment: fixed;
+}
 .login-page-container {
-    margin-top: 15px;
+   
     display: flex;
     justify-content: space-between;
     border-radius: 10px; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+    background-color: rgba(231, 201, 208, 0.975);
   }
   
   .left-div {

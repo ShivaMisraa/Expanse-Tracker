@@ -43,6 +43,7 @@ const ForgetPassWord = () => {
   };
 
   return (
+    <div className="main-forgetPW-page">
     <div className="forget-password-container">
       <div className="forget-password-form">
         <p>Enter the email with which you have registered</p>
@@ -65,6 +66,7 @@ const ForgetPassWord = () => {
               Already a user? Login.
             </Link>
       </div>
+    </div>
     </div>
   );
 };

@@ -85,9 +85,9 @@ const Profile = () => {
   
 
   return (
-    <>
+    <div className='main-profile-page'>
       <div className="login-page-container">
-        <div className="left-">
+        <div className="left-para">
           <h5 className='bold-text'>Winners never quite, Quitters never win.</h5>
         </div>
         <div className="right-div">
@@ -97,6 +97,14 @@ const Profile = () => {
           </p>
         </div>
       </div>
+
+      <div className="left-sidebar">
+        <div className="profile-circle">
+          <img src={photoUrl} alt="Profile" className="user-image" />
+          <p className="welcome-text bold-text">Welcome back {fullName}</p>
+        </div>
+      </div>
+
       <div className="profile-container">
         <Form>
           <div className="contact-details bold-text">
@@ -133,7 +141,7 @@ const Profile = () => {
         </Form>
      
       </div>
-    </>
+    </div>
   );
 };
 

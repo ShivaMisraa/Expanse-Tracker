@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useHistory, Link } from "react-router-dom";
+import "./Login.css"
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -77,7 +78,8 @@ const Login = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
+    <div className="main-login-page">
+    <div className="d-flex justify-content-center align-items-center vh-100 " >
       <Form
         style={{
           width: "300px",
@@ -147,6 +149,7 @@ const Login = () => {
           {isLogin ? "Create Account" : "Login with an existing account"}
         </div>
       </Form>
+    </div>
     </div>
   );
 };

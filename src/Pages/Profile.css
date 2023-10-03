@@ -1,8 +1,43 @@
-.profile-container {
+.main-profile-page {
+  background-image: url('https://img.freepik.com/free-vector/prickly-juniper-branch-beige-gray-minimal-background_53876-113047.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: flex-start; 
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.left-sidebar {
+  width: 30%;
+  background-color: #f0f0f0;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  margin-left: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px; 
+}
+
+.login-page-container {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+
+.profile-container {
+  flex: 1;
+  width: 70%;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .contact-details {
@@ -40,9 +75,30 @@
   font-weight: bold;
 }
 
-.login-page-container{
-  margin-top: 15px;
-}
+
 .right-div{
   margin-left: 30%;
+  margin-top: 15px;
+}
+.left-para{
+  margin-top: 30px;
+  padding-left: 10px;
+}
+.profile-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.user-image {
+  border-radius: 50%; 
+  width: 107px; 
+  height: 107px;
+}
+
+.welcome-text {
+  font-size: 18px;
+  margin-top: 10px;
+  text-align: center;
 }
