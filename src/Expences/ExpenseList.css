@@ -9,6 +9,11 @@
     text-align: center; 
     box-shadow: 0 0 10px rgba(0, 0, 255, 0.5); 
   }
+
+  .btn-grp{
+    padding-left: 15px;
+  }
+  
   
   .main-heading {
     font-size: 32px; 

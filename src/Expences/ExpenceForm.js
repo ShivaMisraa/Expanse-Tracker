@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Form, Button, Col } from "react-bootstrap";
 import './ExpenseForm.css';
 
@@ -8,8 +8,6 @@ const ExpenceForm = ({addExpense}) => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Choose...");
   
-
- 
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,7 +20,7 @@ const ExpenceForm = ({addExpense}) => {
       category,
     };
 
-    addExpense(expense);
+    
 
     fetch(StoreUrl, {
       method: 'POST',
@@ -39,6 +37,9 @@ const ExpenceForm = ({addExpense}) => {
       })
       .then(responseData => {
         console.log('Expense details stored successfully', responseData);
+        const id= responseData.name
+        console.log(id)
+        addExpense(expense, id);
       })
       .catch(error => {
         console.log('Error updating user details', error);
