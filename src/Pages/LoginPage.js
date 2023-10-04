@@ -5,12 +5,39 @@ import VerifyEmail from "./VeifyEmail";
 import LogOut from "./LogOut";
 import ExpenceForm from "../Expences/ExpenceForm";
 import ExpencesList from '../Expences/ExpencesList'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 const LoginPage = () => {
 
   const [expenses, setExpenses] = useState([]);
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchUrl = 'https://expance-tracker-3483a-default-rtdb.firebaseio.com/expenses.json';
+
+      try {
+        const response = await fetch(fetchUrl);
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch expenses data');
+        }
+
+        const data = await response.json();
+
+        if (data) {
+          const expensesArray = Object.values(data);
+          console.log('Fetched expenses data:', expensesArray);
+          setExpenses(expensesArray);
+        }
+      } catch (error) {
+        console.error('Error fetching expenses data:', error);
+      }
+    };
+
+    fetchData();
+  }, []); 
 
   const addExpense = (expense) => {
     setExpenses([...expenses, expense]);
@@ -36,8 +63,8 @@ const LoginPage = () => {
         <VerifyEmail />
         <LogOut/>
       </div>
-        <ExpenceForm addExpense={addExpense} />
-        <ExpencesList expenses={expenses} /> 
+        <ExpenceForm addExpense={addExpense} /> 
+        <ExpencesList expenses={expenses} />
     </div>
   );
 };

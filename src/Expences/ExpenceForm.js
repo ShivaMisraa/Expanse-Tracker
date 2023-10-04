@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Col } from "react-bootstrap";
 import './ExpenseForm.css';
+
 
 const ExpenceForm = ({addExpense}) => {
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Choose...");
+  
+
+ 
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    const StoreUrl = 'https://expance-tracker-3483a-default-rtdb.firebaseio.com/expenses.json';
 
     const expense = {
       amount: parseFloat(amount),
@@ -18,10 +24,31 @@ const ExpenceForm = ({addExpense}) => {
 
     addExpense(expense);
 
+    fetch(StoreUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(expense),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to store expense details');
+        }
+        return response.json();
+      })
+      .then(responseData => {
+        console.log('Expense details stored successfully', responseData);
+      })
+      .catch(error => {
+        console.log('Error updating user details', error);
+      });
+
     setAmount("");
     setDescription("");
     setCategory("Choose...");
   };
+
 
   return (
     <div className="form-container">
