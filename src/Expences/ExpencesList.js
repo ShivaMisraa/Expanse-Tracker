@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, ButtonGroup } from "react-bootstrap";
 import EditExpenseForm from "./EditExpenseForm";
 import "./ExpenseList.css"
 
-const ExpensesList = ({ expenses, onDelete }) => {
+const ExpensesList = ({ onDelete }) => {
   const [selectedExpense, setSelectedExpense] = useState(null);
+  const [expenses, setExpenses] = useState([]); // Declare expenses once
+
+  useEffect(() => {
+    
+    fetch(
+      "https://expance-tracker-3483a-default-rtdb.firebaseio.com/expenses.json"
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const fetchedExpenses = Object.keys(data).map((key) => ({
+          id: key,
+          ...data[key],
+        }));
+        setExpenses(fetchedExpenses);
+      })
+      .catch((error) => {
+        console.error("Error fetching expenses", error);
+      });
+  }, []);
 
   const deleteHandler = (expenseId) => {
     console.log(expenseId);
@@ -37,6 +56,10 @@ const ExpensesList = ({ expenses, onDelete }) => {
 
   const cancelEdit = () => {
     setSelectedExpense(null);
+  };
+
+  const addExpense = (newExpense) => {
+    setExpenses([...expenses, newExpense]);
   };
 
   return (

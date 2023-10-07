@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { Form, Button, Col } from "react-bootstrap";
 import './ExpenseForm.css';
+import { useDispatch } from 'react-redux';
+import { addExpense } from '../Store/ExpenseReducer'; 
 
-
-const ExpenceForm = ({addExpense}) => {
+const ExpenceForm = ({ addExpense }) => {
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("Choose...");
-  
+
+  const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const StoreUrl = 'https://expance-tracker-3483a-default-rtdb.firebaseio.com/expenses.json';
 
     const expense = {
@@ -19,8 +21,6 @@ const ExpenceForm = ({addExpense}) => {
       description,
       category,
     };
-
-    
 
     fetch(StoreUrl, {
       method: 'POST',
@@ -37,9 +37,10 @@ const ExpenceForm = ({addExpense}) => {
       })
       .then(responseData => {
         console.log('Expense details stored successfully', responseData);
-        const id= responseData.name
-        console.log(id)
-        addExpense(expense, id);
+        const id = responseData.name;
+        console.log(id);
+        dispatch(addExpense(expense));
+        addExpense({ id, ...expense });
       })
       .catch(error => {
         console.log('Error updating user details', error);

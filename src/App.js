@@ -1,35 +1,30 @@
 import './App.css';
 import Login from './Auth/Login';
-import { BrowserRouter as Router, Route, Switch , Redirect} from 'react-router-dom';
-import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import React from 'react';
 import Profile from './Pages/Profile';
 import LoginPage from './Pages/LoginPage';
 import ForgetPassWord from './Pages/ForgetPW';
-
+import { useSelector } from 'react-redux';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   return (
     <Router>
       <Switch>
-        <Route path="/profile" component={Profile} />
-        <Route path="/loginPage" component={LoginPage} />
+        <Route path="/profile">
+          {isLoggedIn ? <Profile /> : <Redirect to="/login" />}
+        </Route>
+        <Route path="/loginPage">
+          {isLoggedIn ? <LoginPage /> : <Redirect to="/login" />}
+        </Route>
         <Route path="/forgetpw" component={ForgetPassWord} />
         <Route path="/login">
-          {isLoggedIn ? (
-            <Redirect to="/loginPage" />
-          ) : (
-            <Login onLogin={() => setIsLoggedIn(true)} />
-          )}
+          {isLoggedIn ? <Redirect to="/loginPage" /> : <Login />}
         </Route>
-        <Route path="/">
-          {isLoggedIn ? (
-            <Redirect to="/loginPage" />
-          ) : (
-            <Login onLogin={() => setIsLoggedIn(true)} />
-          )}
+        <Route exact path="/">
+          {isLoggedIn ? <Redirect to="/loginPage" /> : <Login />}
         </Route>
       </Switch>
     </Router>

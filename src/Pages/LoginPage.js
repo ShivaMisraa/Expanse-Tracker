@@ -6,6 +6,7 @@ import LogOut from "./LogOut";
 import ExpenceForm from "../Expences/ExpenceForm";
 import ExpencesList from "../Expences/ExpencesList";
 import { useState, useEffect } from "react";
+import { Button } from "react-bootstrap";
 
 const LoginPage = () => {
   const [expenses, setExpenses] = useState([]);
@@ -29,9 +30,9 @@ const LoginPage = () => {
 
   const editExpense = (editedExpense) => {
     const editUrl = `https://expance-tracker-3483a-default-rtdb.firebaseio.com/expenses/${editedExpense.id}.json`;
-  
+
     fetch(editUrl, {
-      method: "PUT", // Use PUT method to update the expense
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
@@ -53,7 +54,7 @@ const LoginPage = () => {
 
   const addExpense = (newExpense) => {
     setExpenses([...expenses, newExpense]);
-  };
+  };  
 
   const deleteExpense = (expenseId) => {
     const updatedExpenses = expenses.filter(
@@ -61,6 +62,11 @@ const LoginPage = () => {
     );
     setExpenses(updatedExpenses);
   };
+
+  const totalExpenseAmount = expenses.reduce(
+    (total, expense) => total + expense.amount,
+    0
+  );
 
   return (
     <div className="main-login-div">
@@ -78,12 +84,14 @@ const LoginPage = () => {
         </div>
       </div>
       <div className="verify-email-logout">
+        {totalExpenseAmount > 10000 && (
+          <Button className="activate-premium-button">Activate Premium</Button>
+        )}
         <VerifyEmail />
         <LogOut />
       </div>
-      <ExpenceForm addExpense={addExpense} onEdit={editExpense}/>
+      <ExpenceForm addExpense={addExpense} onEdit={editExpense} />
       <ExpencesList expenses={expenses} onDelete={deleteExpense} />
-      
     </div>
   );
 };

@@ -1,10 +1,15 @@
 import React from "react";
-import { Button } from "react-bootstrap"; // Assuming you're using Bootstrap for your button
+import { Button } from "react-bootstrap"; 
+import { useSelector, useDispatch } from 'react-redux';
 
 const VerifyEmail = () => {
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const token = useSelector((state) => state.auth.token);
+  
   const sendVerificationEmail = () => {
-   
-    const idToken = localStorage.getItem('token'); 
+  
+    console.log(token)
 
     fetch(`https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyDA0MnYovAyBq-q5_FGCq5ZyxG_OYvpF50`, {
       method: "POST",
@@ -13,12 +18,11 @@ const VerifyEmail = () => {
       },
       body: JSON.stringify({
         requestType: "VERIFY_EMAIL",
-        idToken: idToken,
+        idToken: token,
       }),
     })
       .then((response) => {
         if (response.ok) {
-         
           alert("Verification email sent successfully.");
         } else {
           alert("Error sending verification email.");
@@ -31,7 +35,7 @@ const VerifyEmail = () => {
 
   return (
     <div>
-      <Button variant="primary" onClick={sendVerificationEmail}>
+      <Button variant="primary" onClick={sendVerificationEmail} disabled={!isLoggedIn}>
         Verify Email
       </Button>
     </div>
