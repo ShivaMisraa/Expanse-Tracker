@@ -5,7 +5,7 @@ import "./ExpenseList.css"
 
 const ExpensesList = ({ onDelete }) => {
   const [selectedExpense, setSelectedExpense] = useState(null);
-  const [expenses, setExpenses] = useState([]); // Declare expenses once
+  const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
     

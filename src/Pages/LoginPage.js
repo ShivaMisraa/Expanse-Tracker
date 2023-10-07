@@ -7,9 +7,14 @@ import ExpenceForm from "../Expences/ExpenceForm";
 import ExpencesList from "../Expences/ExpencesList";
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
+import { toggleTheme } from "../Store/themeReducer";
+import { useSelector, useDispatch } from "react-redux";
 
 const LoginPage = () => {
   const [expenses, setExpenses] = useState([]);
+  const theme = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
+  const [premiumClicked, setPremiumClicked] = useState(false);
 
   useEffect(() => {
     fetch(
@@ -27,6 +32,10 @@ const LoginPage = () => {
         console.error("Error fetching expenses", error);
       });
   }, []);
+
+  const togglePremium = () => {
+    setPremiumClicked(!premiumClicked);
+  };
 
   const editExpense = (editedExpense) => {
     const editUrl = `https://expance-tracker-3483a-default-rtdb.firebaseio.com/expenses/${editedExpense.id}.json`;
@@ -54,7 +63,7 @@ const LoginPage = () => {
 
   const addExpense = (newExpense) => {
     setExpenses([...expenses, newExpense]);
-  };  
+  };
 
   const deleteExpense = (expenseId) => {
     const updatedExpenses = expenses.filter(
@@ -68,8 +77,38 @@ const LoginPage = () => {
     0
   );
 
+  const downloadCSV = () => {
+    const csvData = expenses.map((expense) => {
+      // Format the data as a CSV row
+      return `${expense.amount},${expense.description},${expense.category}`;
+    });
+
+    // Join all CSV rows with line breaks
+    const csvContent = csvData.join("\n");
+
+    // Create a Blob containing the CSV data
+    const blob = new Blob([csvContent], { type: "text/csv" });
+
+    // Create a download link
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.style.display = "none";
+    a.href = url;
+    a.download = "expenses.csv";
+
+    // Trigger the download
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  };
+
   return (
-    <div className="main-login-div">
+    <div
+      className={`main-login-div ${theme} ${
+        premiumClicked ? "dark-theme" : ""
+      }`}
+    >
       <div className="login-page-container">
         <div className="left-div">
           <h5>Welcome to Expense Tracker !!!</h5>
@@ -85,8 +124,25 @@ const LoginPage = () => {
       </div>
       <div className="verify-email-logout">
         {totalExpenseAmount > 10000 && (
-          <Button className="activate-premium-button">Activate Premium</Button>
+          <div className="theme-toggle">
+            <Button
+              className="activate-premium-button"
+              onClick={() => {
+                toggleTheme({ type: "TOGGLE_THEME" });
+                togglePremium(); 
+              }}
+            >
+              Activate Premium
+            </Button>
+            <Button
+          className="download-csv-button"
+          onClick={downloadCSV} 
+        >
+          Download Data
+        </Button>
+          </div>
         )}
+
         <VerifyEmail />
         <LogOut />
       </div>
